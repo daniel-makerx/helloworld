@@ -105,3 +105,9 @@ jobs:
           name: helloworld
           path: dist/helloworld-*-py3-none-any.whl
           if-no-files-found: error
+
+      - name: Update homebrew formula
+        # if: steps.get_branch.outputs.branch == 'main' && inputs.production_release == 'true'
+        run: scripts/update-brew-formula.sh "dist/helloworld-*-py-none-any.whl" "daniel-makerx/homebrew-tap"
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TAP_GITHUB_TOKEN }}
