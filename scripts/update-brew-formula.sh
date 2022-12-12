@@ -2,7 +2,21 @@
 
 #script arguments
 wheel_files=( $1 )
+wheel_file=${wheel_files[0]}
 homebrew_tap_repo=$2
+
+#error codes
+MISSING_WHEEL=1
+RESOURCE_GENERATION_FAILED=2
+FORMULA_GENERATION_FAILED=3
+PR_CREATION_FAILED=4
+
+if [[ ! -f $wheel_file ]]; then
+  >&2 echo "$wheel_file not found. 🚫"
+  exit $MISSING_WHEEL
+else
+  echo "Found $wheel_file 🎉"
+fi
 
 create_resources() {
   local wheel=`realpath $1`
@@ -18,9 +32,9 @@ create_resources() {
   source venv/bin/activate
 
   echo "Using poet to generate resources."
-  pip install $wheel homebrew-pypi-poet >/dev/null 2>&1
+  pip install $wheel homebrew-pypi-poet
   #also strip out resource block for referenced package
-  local resources=`poet $package 2>/dev/null | sed "/resource \"$package\" do/{N;N;N;N;d;}"`
+  local resources=`poet $package | sed "/resource \"$package\" do/{N;N;N;N;d;}"`
 
   echo "Cleanup."
   deactivate
@@ -29,6 +43,15 @@ create_resources() {
   
   echo "Saving resources to $output"
   echo "$resources" > $output
+  lines=`wc -l < $output`
+  
+  expected_lines=4 #assumption that there is at least one dependency
+  if [[ ! -f $output || "$lines" -lt "$expected_lines" ]]; then
+    >&2 echo "Failed to generate $output 🚫"
+    exit $RESOURCE_GENERATION_FAILED
+  else
+    echo "Created $output 🎉"
+  fi
 }
 
 get_metadata() {
@@ -39,8 +62,7 @@ get_metadata() {
 create_formula() {
   repo="https://github.com/${GITHUB_REPOSITORY}"
   homepage="$repo"
-
-  wheel_file=${wheel_files[0]}
+  
   wheel=`basename $wheel_file`
   echo "Creating brew formula from $wheel_file"
 
@@ -73,7 +95,7 @@ create_formula() {
   sha256=`curl -s -L $url | sha256sum | cut -f 1 -d ' '`
 
   echo "Determining resources for $command..."
-  create_resources $wheel $command resources.txt
+  create_resources $wheel_file $command resources.txt
   resources=`cat resources.txt`
 
   formula=`echo ${command:0:1} | tr  '[a-z]' '[A-Z]'`${command:1}
@@ -94,6 +116,7 @@ class $formula < Formula
   head "$head", branch: "main"
 
   depends_on "python@3.10"
+  depends_on "pipx"
 
 $resources
 
@@ -106,21 +129,27 @@ $resources
   end
 end
 EOF
+
+  if [[ ! -f $ruby ]]; then
+    >&2 echo "Failed to generate $ruby 🚫"
+    exit $FORMULA_GENERATION_FAILED
+  else
+    echo "Created $ruby 🎉"
+  fi
 }
 
 create_pr() {
   export GH_TOKEN=$API_TOKEN_GITHUB
+  local full_ruby=`realpath $ruby`  
   echo "Cloning $homebrew_tap_repo..."
   clone_dir=`mktemp -d`
   git clone "https://${API_TOKEN_GITHUB}@github.com/${homebrew_tap_repo}.git" $clone_dir
 
-  echo "Updating Formula/$ruby..."
-  cp $ruby $clone_dir/Formula
-
-  echo "Commiting..."
+  echo "Commiting Formula/$ruby..."
   pushd $clone_dir
   dest_branch="$command-update-$version"
-  git checkout -b $dest_branch
+  git switch $dest_branch
+  cp $full_ruby $clone_dir/Formula
   git add .
   git commit --message "Updating $command to $version"
 
@@ -129,11 +158,19 @@ create_pr() {
 
   echo "Creating a pull request..."
   gh pr create --fill
+  pr_exit_code=$?
 
   popd
 
   echo "Cleanup."
   rm -rf $clone_dir
+
+  if [[ $pr_exit_code != 0 ]]; then
+    >&2 echo "PR creation failed 🚫"
+    exit $PR_CREATION_FAILED
+  else
+    echo "PR creation successful 🎉"
+  fi
 }
 
 create_formula
