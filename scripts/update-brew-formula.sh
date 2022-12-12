@@ -2,7 +2,19 @@
 
 #script arguments
 wheel_files=( $1 )
+wheel_file=${wheel_files[0]}
 homebrew_tap_repo=$2
+
+#error codes
+MISSING_WHEEL=1
+RESOURCE_GENERATION_FAILED=2
+FORMULA_GENERATION_FAILED=3
+PR_CREATION_FAILED=4
+
+if [[ ! -f $wheel_file ]]; then
+  >&2 echo "$wheel_file not found."
+  exit $MISSING_WHEEL
+fi
 
 create_resources() {
   local wheel=`realpath $1`
@@ -29,6 +41,10 @@ create_resources() {
   
   echo "Saving resources to $output"
   echo "$resources" > $output
+  if [[ ! -f $output ]]; then
+    >&2 echo "Failed to generate $output"
+    exit $RESOURCE_GENERATION_FAILED
+  fi
 }
 
 get_metadata() {
@@ -39,8 +55,7 @@ get_metadata() {
 create_formula() {
   repo="https://github.com/${GITHUB_REPOSITORY}"
   homepage="$repo"
-
-  wheel_file=${wheel_files[0]}
+  
   wheel=`basename $wheel_file`
   echo "Creating brew formula from $wheel_file"
 
@@ -106,6 +121,11 @@ $resources
   end
 end
 EOF
+
+  if [[ ! -f $ruby ]]; then
+    >&2 echo "Failed to generate $ruby"
+    exit $FORMULA_GENERATION_FAILED
+  fi
 }
 
 create_pr() {
@@ -129,11 +149,17 @@ create_pr() {
 
   echo "Creating a pull request..."
   gh pr create --fill
+  pr_exit_code=$?
 
   popd
 
   echo "Cleanup."
   rm -rf $clone_dir
+
+  if [[ $pr_exit_code != 0 ]]; then
+    >&2 echo "PR creation failed"
+    exit PR_CREATION_FAILED
+  fi
 }
 
 create_formula
