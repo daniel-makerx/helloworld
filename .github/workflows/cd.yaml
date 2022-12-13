@@ -109,3 +109,5 @@ jobs:
       - name: Update homebrew formula
         if: steps.get_branch.outputs.branch == 'main' && inputs.production_release == 'true'
         run: scripts/update-brew-formula.sh "dist/helloworld-*-py3-none-any.whl" "daniel-makerx/homebrew-tap"
+        env:
+          GH_TOKEN: ${{ github.token }}
