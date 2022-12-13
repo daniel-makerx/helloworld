@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.1 (2022-12-13)
+### Fix
+* Improved readme ([`113cb32`](https://github.com/daniel-makerx/helloworld/commit/113cb326b1763191a734de1f6eeb60c9e96c8c1c))
+
 ## v0.2.0 (2022-12-13)
 ### Feature
 * Add say command ([`029511a`](https://github.com/daniel-makerx/helloworld/commit/029511a2adddab7cc26afb66d6f3292beb2a01f1))
