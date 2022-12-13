@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.2 (2022-12-13)
+### Fix
+* Fix token ([`ff4e020`](https://github.com/daniel-makerx/helloworld/commit/ff4e0202b48a98b44fb813315d29c57c459416ae))
+
 ## v0.2.1 (2022-12-13)
 ### Fix
 * Improved readme ([`113cb32`](https://github.com/daniel-makerx/helloworld/commit/113cb326b1763191a734de1f6eeb60c9e96c8c1c))
