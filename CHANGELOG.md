@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.5 (2022-12-14)
+### Fix
+* Minor fix ([`bedf4a4`](https://github.com/daniel-makerx/helloworld/commit/bedf4a41df34248ac8920cbb3d5991f529f9315a))
+
 ## v0.2.4 (2022-12-14)
 ### Fix
 * Fix incorrect token ([`7d34c24`](https://github.com/daniel-makerx/helloworld/commit/7d34c2472efe9f75d879ff98ea61515b1df3727d))
