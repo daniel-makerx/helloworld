@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.1 (2022-12-14)
+### Fix
+* Fix formula script ([`8ca3b52`](https://github.com/daniel-makerx/helloworld/commit/8ca3b52a2b00d03ccc56575a2b26757816c87624))
+
 ## v0.3.0 (2022-12-14)
 ### Feature
 * Another feature ([`b5d1116`](https://github.com/daniel-makerx/helloworld/commit/b5d11162ea08816c2621a2e892ef1113ce43ed5a))
