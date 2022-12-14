@@ -139,10 +139,11 @@ EOF
 }
 
 create_pr() {
+  export GH_TOKEN=$TAP_TOKEN_GITHUB
   local full_ruby=`realpath $ruby`  
   echo "Cloning $homebrew_tap_repo..."
   clone_dir=`mktemp -d`
-  git clone "https://${GH_TOKEN}@github.com/${homebrew_tap_repo}.git" $clone_dir
+  git clone "https://${TAP_GITHUB_TOKEN}@github.com/${homebrew_tap_repo}.git" $clone_dir
 
   echo "Commiting Formula/$ruby..."
   pushd $clone_dir
