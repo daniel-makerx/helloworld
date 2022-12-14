@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.2 (2022-12-14)
+### Fix
+* Update tap repo ([`9120584`](https://github.com/daniel-makerx/helloworld/commit/9120584b88f309d1a561e0ca333da7c2756070ff))
+
 ## v0.3.1 (2022-12-14)
 ### Fix
 * Fix formula script ([`8ca3b52`](https://github.com/daniel-makerx/helloworld/commit/8ca3b52a2b00d03ccc56575a2b26757816c87624))
