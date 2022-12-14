@@ -139,7 +139,7 @@ EOF
 }
 
 create_pr() {
-  export GH_TOKEN=$TAP_TOKEN_GITHUB
+  export GH_TOKEN=$TAP_GITHUB_TOKEN
   local full_ruby=`realpath $ruby`  
   echo "Cloning $homebrew_tap_repo..."
   clone_dir=`mktemp -d`
