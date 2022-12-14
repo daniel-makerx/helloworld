@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.3 (2022-12-14)
+### Fix
+* A fix ([`a9c1072`](https://github.com/daniel-makerx/helloworld/commit/a9c10721803fa32b5d6717fb2cd99d8f390272ff))
+
 ## v0.2.2 (2022-12-13)
 ### Fix
 * Fix token ([`ff4e020`](https://github.com/daniel-makerx/helloworld/commit/ff4e0202b48a98b44fb813315d29c57c459416ae))
