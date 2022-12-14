@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2022-12-14)
+### Feature
+* Another feature ([`b5d1116`](https://github.com/daniel-makerx/helloworld/commit/b5d11162ea08816c2621a2e892ef1113ce43ed5a))
+
 ## v0.2.6 (2022-12-14)
 ### Fix
 * More fixes ([`2c8c5bb`](https://github.com/daniel-makerx/helloworld/commit/2c8c5bbe83eb570e816092106bb8f884234befb2))
