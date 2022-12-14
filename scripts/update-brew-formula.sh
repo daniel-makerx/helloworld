@@ -149,6 +149,7 @@ create_pr() {
   pushd $clone_dir
   dest_branch="$command-update-$version"
   git checkout -b $dest_branch
+  mkdir -p $clone_dir/Formula
   cp $full_ruby $clone_dir/Formula
   git add .
   git commit --message "Updating $command to $version"
