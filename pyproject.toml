@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "helloworld"
-version = "0.2.5"
+version = "0.2.6"
 description = "Says Hello World"
 authors = ["MakerX <daniel.mcgregor@makerx.com.au>"]
 license = "MIT"

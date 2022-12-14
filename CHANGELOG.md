@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.6 (2022-12-14)
+### Fix
+* More fixes ([`2c8c5bb`](https://github.com/daniel-makerx/helloworld/commit/2c8c5bbe83eb570e816092106bb8f884234befb2))
+
 ## v0.2.5 (2022-12-14)
 ### Fix
 * Minor fix ([`bedf4a4`](https://github.com/daniel-makerx/helloworld/commit/bedf4a41df34248ac8920cbb3d5991f529f9315a))
