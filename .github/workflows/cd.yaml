@@ -67,6 +67,7 @@ jobs:
           poetry run semantic-release \
             --prerelease \
             publish
+          poetry run semantic-release print-version --current --verbosity=DEBUG
         # --define=upload_to_repository=true \
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
