@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.0 (2023-01-09)
+### Feature
+* A different new feature ([`f301c81`](https://github.com/daniel-makerx/helloworld/commit/f301c81c44b3ce0ed89cf5f41141eeb1a1d90d03))
+
+### Fix
+* The third fix ([`c875d40`](https://github.com/daniel-makerx/helloworld/commit/c875d40c5a9a93c938c56b18ff5fc2c3d57074ab))
+* Another bug fix ([`5d0e83f`](https://github.com/daniel-makerx/helloworld/commit/5d0e83f107f9659dc28d40070a9aedc7f8b722e2))
+* A minor fix ([`7d932b8`](https://github.com/daniel-makerx/helloworld/commit/7d932b8bd615dd01121b579008c808db0de26d0c))
+
 ## v0.3.3 (2023-01-09)
 ### Fix
 * Fix readme ([`762b01f`](https://github.com/daniel-makerx/helloworld/commit/762b01f0cb6473664576ad5717901d2421e33a71))
