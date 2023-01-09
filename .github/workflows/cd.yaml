@@ -91,6 +91,7 @@ jobs:
         run: |
           poetry run semantic-release \
             --prerelease \
+            --patch \
             --define=prerelease_tag=beta+${{ steps.get_branch.outputs.branch }} \
             --define=branch=${{ steps.get_branch.outputs.branch }} \
             publish
