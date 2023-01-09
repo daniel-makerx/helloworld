@@ -7,6 +7,16 @@ on:
         required: true
         type: string
         description: "The github artifact holding the wheel file which will be published"
+      do_brew:
+        required: false
+        default: true
+        type: boolean
+        description: "Publish to brew repository"
+      do_chocolatey:
+        required: false
+        default: true
+        type: boolean
+        description: "Publish to Chocolatey repository"
   workflow_dispatch:
     inputs:
       release:
@@ -18,6 +28,11 @@ on:
         default: true
         type: boolean
         description: "Publish to brew repository"
+      do_chocolatey:
+        required: false
+        default: true
+        type: boolean
+        description: "Publish to Chocolatey repository"
 
 jobs:
   publish-brew:
@@ -33,6 +48,7 @@ jobs:
         run: gh release download ${{ inputs.release }} --pattern "*.whl" --dir dist
         env:
           GH_TOKEN: ${{ github.token }}
+
       - name: Download artifact
         if: ${{ github.event_name == 'workflow_call' }}
         uses: actions/download-artifact@v3
@@ -47,3 +63,24 @@ jobs:
         run: scripts/update-brew-formula.sh "dist/helloworld-*-py3-none-any.whl" "daniel-makerx/homebrew-tap"
         env:
           TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+
+  publish-chocolatey:
+    runs-on: windows-latest
+    if: ${{ inputs.do_chocolatey }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      # Download either via release or provided artifact
+      - name: Download release
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: gh release download ${{ inputs.release }} --pattern "*.whl" --dir dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Download artifact
+        if: ${{ github.event_name == 'workflow_call' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.artifactName }}
+          path: dist
