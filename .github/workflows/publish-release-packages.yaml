@@ -10,7 +10,6 @@ on:
     secrets:
       tapTokenOverride:
         required: false
-        type: string
         description: "An override for the github token to publish to daniel-homebrew/homebrew-tap"
 
 jobs:
