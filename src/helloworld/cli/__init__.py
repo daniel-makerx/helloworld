@@ -1,7 +1,7 @@
 import click
 from helloworld.cli.say import say_command
 
-# minor fix 2
+# minor fix 3
 @click.group(
     help="HelloWorld",
     context_settings={"help_option_names": ["-h", "--help"]},
