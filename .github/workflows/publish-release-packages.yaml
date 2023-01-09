@@ -1,0 +1,32 @@
+name: Publish packages to public repositories
+
+on:
+  workflow_call:
+    inputs:
+      artifactName:
+        required: true
+        type: string
+        description: "The github artifact holding the wheel file which will be published"
+    secrets:
+      tapTokenOverride:
+        required: false
+        type: string
+        description: "An override for the github token to publish to daniel-homebrew/homebrew-tap"
+
+jobs:
+  publish-brew:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.artifactName }}
+          path: dist
+
+      - name: Update homebrew formula
+        run: scripts/update-brew-formula.sh "dist/helloworld-*-py3-none-any.whl" "daniel-makerx/homebrew-tap"
+        env:
+          TAP_GITHUB_TOKEN: ${{ secrets.tapTokenOverride || secrets.TAP_GITHUB_TOKEN }}

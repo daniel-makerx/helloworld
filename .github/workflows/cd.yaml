@@ -107,8 +107,12 @@ jobs:
           path: dist/helloworld-*-py3-none-any.whl
           if-no-files-found: error
 
-      - name: Update homebrew formula
-        if: steps.get_branch.outputs.branch == 'main' && inputs.production_release == 'true'
-        run: scripts/update-brew-formula.sh "dist/helloworld-*-py3-none-any.whl" "daniel-makerx/homebrew-core"
-        env:
-          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+  cd-publish-release-packages:
+    name: Publish Release Packages
+    needs: release
+    # if: ${{ github.ref_name == 'chocolatey-package' }} && inputs.production_release != 'true' # used to test manual release from a branch
+    if: ${{ github.ref_name == 'main' && inputs.production_release == 'true' }} # Might want to adjust this to publish (pre-release) on merge as well.
+    uses: ./.github/workflows/publish-release-packages.yaml
+    with:
+      artifactName: helloworld
+    secrets: inherit
