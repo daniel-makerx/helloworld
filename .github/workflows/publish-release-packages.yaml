@@ -13,10 +13,16 @@ on:
         required: true
         type: string
         description: "The github release which will be published"
+      do_brew:
+        required: false
+        default: true
+        type: boolean
+        description: "Publish to brew repository"
 
 jobs:
   publish-brew:
     runs-on: ubuntu-latest
+    if: ${{ inputs.do_brew }}
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
