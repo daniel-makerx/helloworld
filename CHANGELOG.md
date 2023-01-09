@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.3 (2023-01-09)
+### Fix
+* Fix readme ([`762b01f`](https://github.com/daniel-makerx/helloworld/commit/762b01f0cb6473664576ad5717901d2421e33a71))
+
 ## v0.3.2 (2022-12-14)
 ### Fix
 * Update tap repo ([`9120584`](https://github.com/daniel-makerx/helloworld/commit/9120584b88f309d1a561e0ca333da7c2756070ff))
