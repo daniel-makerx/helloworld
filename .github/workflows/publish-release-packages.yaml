@@ -7,6 +7,12 @@ on:
         required: true
         type: string
         description: "The github artifact holding the wheel file which will be published"
+  workflow_dispatch:
+    inputs:
+      release:
+        required: true
+        type: string
+        description: "The github release which will be published"
     secrets:
       tapTokenOverride:
         required: false
@@ -19,7 +25,13 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
+      # Download either via release or provided artifact
+      - name: Download release
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: gh release download ${{ inputs.release }} --pattern "*.whl" --dir dist
+
       - name: Download artifact
+        if: ${{ github.event_name == 'workflow_call' }}
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.artifactName }}
