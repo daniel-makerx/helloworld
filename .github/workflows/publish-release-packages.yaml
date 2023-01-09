@@ -13,10 +13,6 @@ on:
         required: true
         type: string
         description: "The github release which will be published"
-    secrets:
-      tapTokenOverride:
-        required: false
-        description: "An override for the github token to publish to daniel-homebrew/homebrew-tap"
 
 jobs:
   publish-brew:
@@ -40,4 +36,4 @@ jobs:
       - name: Update homebrew formula
         run: scripts/update-brew-formula.sh "dist/helloworld-*-py3-none-any.whl" "daniel-makerx/homebrew-tap"
         env:
-          TAP_GITHUB_TOKEN: ${{ secrets.tapTokenOverride || secrets.TAP_GITHUB_TOKEN }}
+          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
